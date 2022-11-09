@@ -10,7 +10,7 @@ module.exports = {
       options: {
         // You can find your read-only API token under the Settings > API tokens
         // section of your administrative area. Make sure to grant both CDA and CMA permissions.
-        apiToken: `${ secrets.DATOCMS_READONLY_APIKEY }`,
+        apiToken: process.env.DATOCMS_READONLY_APIKEY,
   
         // The project environment to read from. Defaults to the primary environment:
         environment: `main`,
