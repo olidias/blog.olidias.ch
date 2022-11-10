@@ -32,6 +32,15 @@ module.exports = {
         pageSize: 500,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/pages/articles`,
+        name: "pages"
+      }
+    },
     `gatsby-plugin-image`,
+    `gatsby-plugin-catch-links`,
+    `gatsby-plugin-react-helmet`
   ]
 }

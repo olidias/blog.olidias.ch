@@ -30,6 +30,7 @@ export const query = graphql`
       nodes {
         id
         title
+        slug
         publicationDate
         coverImage {
           url
