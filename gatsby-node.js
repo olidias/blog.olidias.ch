@@ -26,7 +26,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         createPage({
             path: `articles/${node?.slug}`,
             component: blogPostTemplate,
-            context: {} // additional data can be passed via context
+            context: { node } // additional data can be passed via context
         })
     })
 }
