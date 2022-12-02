@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+module.exports = {  
   content: [
-    './pages/**/*.{html,js}',
-    './components/**/*.{html,js}',
+    './src/pages/**/*.{html,js}',
+    './src/components/**/*.{html,js}',
 ],
   theme: {
     screens: {
@@ -13,6 +13,9 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {},
+    colors: {
+      'background-from': '#1E333D'
+    }
   },
   plugins: [],
 }
