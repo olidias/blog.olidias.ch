@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Color Theme Swatches in Hex */
+.S-A-M-R-U-N-I-1-hex { color: hsla(204, 16%, 47%, 0.424); }
+.S-A-M-R-U-N-I-2-hex { color: hsla(196, 15%, 70%, 0.424); }
+.S-A-M-R-U-N-I-3-hex { color: hsla(189, 17%, 30%, 0.424); }
+.S-A-M-R-U-N-I-4-hex { color: hsla(34, 38%, 40%, 0.424); }
+.S-A-M-R-U-N-I-5-hex { color: hsla(33, 31%, 34%, 0.424); }
+
+/* Color Theme Swatches in RGBA */
+.S-A-M-R-U-N-I-1-rgba { color: rgba(100, 125, 140, 1); }
+.S-A-M-R-U-N-I-2-rgba { color: rgba(168, 184, 191, 1); }
+.S-A-M-R-U-N-I-3-rgba { color: rgba(63, 84, 89, 1); }
+.S-A-M-R-U-N-I-4-rgba { color: rgba(140, 105, 63, 1); }
+.S-A-M-R-U-N-I-5-rgba { color: rgba(114, 89, 59, 1); }
+
+/* Color Theme Swatches in HSLA */
+.S-A-M-R-U-N-I-1-hsla { color: hsla(202, 16, 47, 1); }
+.S-A-M-R-U-N-I-2-hsla { color: hsla(196, 15, 70, 1); }
+.S-A-M-R-U-N-I-3-hsla { color: hsla(191, 16, 29, 1); }
+.S-A-M-R-U-N-I-4-hsla { color: hsla(33, 37, 39, 1); }
+.S-A-M-R-U-N-I-5-hsla { color: hsla(33, 31, 34, 1); }

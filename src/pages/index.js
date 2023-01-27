@@ -4,21 +4,23 @@ import { graphql } from "gatsby";
 import Layout from '../components/layout';
 import Header from '../components/header';
 import Navigation from '../components/navigation';
-import ArticleTeaser from './articleTeaser';
+import ArticleTeaser from './article-teaser';
 
 function Index({ data: { allArticles } }) {
   const articles = allArticles.nodes;
 
   return (
-    <Layout>
-      <Header />
-      <Navigation />
-      <main>
-        {articles.map(article => (
-          <ArticleTeaser article={article} key={article.id}></ArticleTeaser>
-        ))}
-      </main>
-    </Layout>
+    <div className="bg-gradient-to-b from-background-2 via-background-3 to-background-5 h-full w-full flex justify-center">
+      <Layout className="bg-main-background w-full h-full">
+        <Header />
+        <Navigation />
+        <main className="flex flex-col justify-center items-center">
+          {articles.map(article => (
+            <ArticleTeaser article={article} key={article.id}></ArticleTeaser>
+          ))}
+        </main>
+      </Layout>
+    </div>
   );
 }
 
