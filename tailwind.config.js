@@ -38,12 +38,17 @@ module.exports = {
         "megrim": ['Megrim']
       },
       animation: {
-        fade: 'fadeOut 500ms ease-in-out',
+        fade: 'fadeOut 500ms ease-in-out 500ms forwards',
+        typewriter: 'typing 1s steps(100, end) 1s forwards',
       },
       keyframes: theme => ({
         fadeOut: {
           '0%': { opacity: 0 },
           '100%': { opacity: 1 },
+        },
+        typing: {
+          '0%': { width: 0 },
+          '100%': { width: '100%' },
         },
       }),
     },
