@@ -31,4 +31,5 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             } // additional data can be passed via context
         })
     })
+
 }

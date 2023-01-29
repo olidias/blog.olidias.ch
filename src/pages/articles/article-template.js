@@ -8,21 +8,19 @@ import Navigation from '../../components/navigation';
 export default function ArticleTemplate({ data }) {
     console.log(data);
     return (
-        <div className="bg-gradient-to-b from-background-2 via-background-3 to-background-5 h-full w-full flex justify-center">
-            <Layout className="bg-main-background w-full h-full">
-                <Header />
-                <Navigation />
+        <Layout className="bg-main-background w-full h-full">
+            <Header />
+            <Navigation />
+            <div>
+                <h1>{data.datoCmsArticle?.title}</h1>
                 <div>
-                    <h1>{data.datoCmsArticle?.title}</h1>
-                    <div>
-                        <small>{moment(data.datoCmsArticle.publicationDate).format('DD.MM.yyyy')}</small>
-                        <article>
-                            {data.datoCmsArticle?.articleContent}
-                        </article>
-                    </div>
+                    <small>{moment(data.datoCmsArticle.publicationDate).format('DD.MM.yyyy')}</small>
+                    <article>
+                        {data.datoCmsArticle?.articleContent}
+                    </article>
                 </div>
-            </Layout>
-        </div>
+            </div>
+        </Layout>
     )
 }
 

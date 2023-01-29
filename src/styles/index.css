@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Explora&family=Megrim&display=swap');
 
 /* Color Theme Swatches in Hex */
 .S-A-M-R-U-N-I-1-hex { color: hsla(204, 16%, 47%, 0.424); }
