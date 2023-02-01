@@ -2,11 +2,10 @@ import moment from "moment";
 import React from "react";
 
 export default function ArticleTeaser({article}) {
-    const publicationDate = moment(article.publicationDate);
-    const hasNoImg = !article.coverImage?.url;
+    const publicationDate = moment(article?.publicationDate);
     return article ? (
         <div 
-        style={{"background-image": hasNoImg? '' : `url(${article.coverImage?.url})` }}
+        style={{"background-image": `url(${article.coverImage?.url})` }}
         className="w-full h-80 mt-10 shadow-xl px-10 py-5 bg-cover bg-no-repeat rounded flex flex-col items-stretch">
             <h2 className="font-bold text-lg">{article.title}</h2>
             <p>{publicationDate.format('DD.MM.yyyy')}</p>
