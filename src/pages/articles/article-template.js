@@ -25,7 +25,7 @@ export default function ArticleTemplate({ data }) {
 }
 
 export const query = graphql`
-    query($slug: String!) {
+    query($slug: String) {
         datoCmsArticle(slug: { eq: $slug }) {
             id
             title
