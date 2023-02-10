@@ -6,7 +6,7 @@ import InitialBanner from "../components/initial-banner";
 
 export default function Gallery() {
     return (
-        <Layout className="bg-main-background w-full h-full">
+        <Layout className="w-full h-full">
             <InitialBanner />
             <Header />
             <Navigation activeIndex={1} />

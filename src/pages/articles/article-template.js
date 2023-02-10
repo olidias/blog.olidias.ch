@@ -10,7 +10,7 @@ import Carousel from "nuka-carousel/lib/carousel";
 export default function ArticleTemplate({ data }) {
     console.log(data);
     return (
-        <Layout className="bg-main-background w-full h-full">
+        <Layout className="w-full h-full">
             <Header />
             <InitialBanner />
             <Navigation />

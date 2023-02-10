@@ -22,9 +22,7 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'main-background': "url('./assets/background-main.jpg')",
-        'banner-background': "url('./assets/banner-background.jpg')",
-        'header-background': "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(168, 185, 191, 1)),url('./assets/IMG_1972.jpg')"
+        'header-background': "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(168, 185, 191, 1)),url('./assets/header-background.webp')"
       },
       colors: {
         "background-1": '#657D8C',
