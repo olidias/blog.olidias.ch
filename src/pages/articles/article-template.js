@@ -15,16 +15,13 @@ export default function ArticleTemplate({ data }) {
             <InitialBanner />
             <Navigation />
             <div>
-                <div className={`${data.datoCmsArticle.articleGallery.length <= 1 ? 'hidden' : ''}`}>
+                <div className={`${data.datoCmsArticle.articleGallery.filter(g => g.customData?.isHeader).length === 0 ? 'hidden' : ''} max-w-4xl mx-auto`}>
                     <Carousel adaptiveHeight={false} defaultControlsConfig={{
                         nextButtonText: '❯',
                         prevButtonText: '❮',
-                        pagingDotsStyle: {margin: '1rem'}
-                    }}
-                    >
-                        <img src={data.datoCmsArticle.articleGallery[0]?.url} alt={data.datoCmsArticle.articleGallery[0]?.alt} />
-                        <img src={data.datoCmsArticle.articleGallery[1]?.url} alt={data.datoCmsArticle.articleGallery[1]?.alt} />
-                        <img src={data.datoCmsArticle.articleGallery[2]?.url} alt={data.datoCmsArticle.articleGallery[2]?.alt} />
+                        pagingDotsStyle: { margin: '1rem' }
+                    }} className="rounded-sm shadow-lg">
+                        {data.datoCmsArticle.articleGallery?.filter(g => g.customData?.isHeader).map(g => <img src={g.url} alt={g.alt} />)}
                     </Carousel>
                 </div>
 
@@ -32,7 +29,7 @@ export default function ArticleTemplate({ data }) {
                 <div>
                     <p className="text-center text-sm mb-3">{moment(data.datoCmsArticle.publicationDate).format('DD.MM.yyyy')}</p>
                     <article>
-                        {data.datoCmsArticle?.articleContent}
+                        <p dangerouslySetInnerHTML={{ __html: data.datoCmsArticle?.articleContent }} />
                     </article>
                 </div>
             </div>
@@ -49,8 +46,9 @@ export const query = graphql`
             publicationDate
             articleContent
             articleGallery {
-              url
-              alt
+                url(imgixParams: {h: "490", w: "896", fit: "crop"})
+                alt
+                customData
             }
             }   
 }`
