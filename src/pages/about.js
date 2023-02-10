@@ -11,11 +11,14 @@ function About({ data: { about } }) {
             <InitialBanner />
             <Header />
             <Navigation activeIndex={2} />
-            <div className="">
+            <div>
                 <div>
-                    <img src={about?.aboutImg?.url} alt={about?.aboutImg?.alt} className="rounded-full w-56 shadow-lg mx-auto sm:my-4 my-8" />
-                    <article className="text-lg font-light">
-                        {about?.aboutArticle}
+                    <img src={about?.aboutImg?.url} alt={about?.aboutImg?.alt} className="rounded-full w-56 shadow-lg mx-auto sm:my-4 -w-xs hover:scale-110 transition duration-300 ease-in-out" />
+                    <h1 className="text-3xl font-thin text-center mt-9">Hello there! 👋</h1>
+                    <article>
+                        <div className="text-lg font-light text-center mt-2 whitespace-pre-wrap mx-5 sm:mx-9">
+                            <p dangerouslySetInnerHTML={{ __html: about?.aboutArticle}}></p>
+                        </div>
                     </article>
                 </div>
 

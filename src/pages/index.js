@@ -28,8 +28,8 @@ export default Index;
 
 export const query = graphql`
 {
-  allArticles: allDatoCmsArticle {
-      nodes {
+  allArticles: allDatoCmsArticle(sort: {fields: publicationDate, order:DESC}) {
+    nodes {
         id
         title
         slug
