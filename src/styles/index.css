@@ -23,3 +23,14 @@
 .S-A-M-R-U-N-I-3-hsla { color: hsla(191, 16, 29, 1); }
 .S-A-M-R-U-N-I-4-hsla { color: hsla(33, 37, 39, 1); }
 .S-A-M-R-U-N-I-5-hsla { color: hsla(33, 31, 34, 1); }
+
+
+
+/* Article image styling */
+article p {
+    @apply flex-row justify-center my-4 leading-relaxed;
+}
+
+p img {
+    @apply my-5 shadow-2xl rounded;
+}
