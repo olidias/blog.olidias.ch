@@ -27,10 +27,10 @@
 
 
 /* Article image styling */
-article p {
+article p p {
     @apply flex-row justify-center my-4 leading-relaxed;
 }
 
 p img {
-    @apply my-5 shadow-2xl rounded;
+    @apply my-5 shadow-2xl rounded flex;
 }

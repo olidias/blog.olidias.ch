@@ -32,6 +32,22 @@ export default function ArticleTemplate({ data }) {
                         <p dangerouslySetInnerHTML={{ __html: data.datoCmsArticle?.articleContent }} />
                     </article>
                 </div>
+                <section class="overflow-hidden text-neutral-700">
+                    <div class="container mx-auto py-8 ">
+                        <div class=" flex flex-wrap md:-m-2">
+                            {data.datoCmsArticle.articleGallery?.filter(g => !g.customData?.isHeader).map(a => 
+                                <div class="flex w-1/3 items-stretch flex-wrap">
+                                    <div class="w-full p-1 md:p-2">
+                                        <img
+                                            alt={a.alt}
+                                            class="block h-full w-full rounded-lg object-cover object-center"
+                                            src={a.url} />
+                                    </div>
+                                </div>)
+                            }
+                        </div>
+                    </div>
+                </section>
             </div>
         </Layout>
     )
