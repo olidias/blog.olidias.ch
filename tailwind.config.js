@@ -22,14 +22,16 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'header-background': "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(168, 185, 191, 1)),url('./assets/header-background.webp')"
+        'header-background': "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(27, 33, 39, 1)),url('./assets/header-background.webp')"
       },
       colors: {
         "background-1": '#657D8C',
         "background-2": '#A8B9BF',
-        "background-3": '#3F5559',
+        "background-end": '#383F47',
         "background-4": '#8C6A3F',
-        "background-5": '#735A3C' 
+        "background-start": '#1B2127',
+        "nav-text-color": '#545D69',
+        
       },
       fontFamily: {
         "explora": ['Explora'],

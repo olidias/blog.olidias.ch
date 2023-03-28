@@ -14,7 +14,7 @@ export default function ArticleTemplate({ data }) {
             <Header />
             <InitialBanner />
             <Navigation />
-            <div>
+            <div className="text-slate-200 p-3 rounded">
                 <div className={`${data.datoCmsArticle.articleGallery.filter(g => g.customData?.isHeader).length === 0 ? 'hidden' : ''} max-w-4xl mx-auto`}>
                     <Carousel adaptiveHeight={false} defaultControlsConfig={{
                         nextButtonText: '❯',
@@ -25,14 +25,14 @@ export default function ArticleTemplate({ data }) {
                     </Carousel>
                 </div>
 
-                <h1 className="text-xl font-medium leading-tight mb-2 text-center m-4">{data.datoCmsArticle?.title}</h1>
+                <h1 className="text-xl font-medium leading-tight mb-2 text-left mt-4">{data.datoCmsArticle?.title}</h1>
                 <div>
-                    <p className="text-center text-sm mb-3">{moment(data.datoCmsArticle.publicationDate).format('DD.MM.yyyy')}</p>
+                    <p className="text-left text-xs mb-3">{moment(data.datoCmsArticle.publicationDate).format('DD.MM.yyyy')}</p>
                     <article>
                         <p dangerouslySetInnerHTML={{ __html: data.datoCmsArticle?.articleContent }} />
                     </article>
                 </div>
-                <section class="overflow-hidden text-neutral-700">
+                <section class="overflow-hidden text-neutral-700 ">
                     <div class="container mx-auto py-8 ">
                         <div class=" flex flex-wrap md:-m-2">
                             {data.datoCmsArticle.articleGallery?.filter(g => !g.customData?.isHeader).map(a => 
