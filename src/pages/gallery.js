@@ -10,7 +10,7 @@ export default function Gallery() {
             <InitialBanner />
             <Header />
             <Navigation activeIndex={1} />
-            <div>
+            <div className="z-10">
                 <h1>Gallery</h1>
             </div>
         </Layout>

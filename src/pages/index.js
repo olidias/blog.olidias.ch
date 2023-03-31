@@ -11,11 +11,12 @@ function Index({ data: { allArticles } }) {
   const articles = allArticles.nodes;
 
   return (
-    <Layout className="bg-main-background w-full h-full">
+    <Layout className="w-full h-full">
+      <title>olidias.ch - Travelblog and Photography</title>
       <InitialBanner />
       <Header />
       <Navigation />
-      <main className="flex flex-col justify-center items-center">
+      <main className="flex flex-col justify-center items-center z-10">
         {articles.map(article => (
           <ArticleTeaser article={article} key={article.id}></ArticleTeaser>
         ))}

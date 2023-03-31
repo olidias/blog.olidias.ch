@@ -8,13 +8,12 @@ import InitialBanner from "../../components/initial-banner";
 import Carousel from "nuka-carousel/lib/carousel";
 
 export default function ArticleTemplate({ data }) {
-    console.log(data);
     return (
         <Layout className="w-full h-full">
             <Header />
             <InitialBanner />
             <Navigation />
-            <div className="text-slate-200 p-3 rounded">
+            <div className="text-slate-200 p-3 rounded z-10">
                 <div className={`${data.datoCmsArticle.articleGallery.filter(g => g.customData?.isHeader).length === 0 ? 'hidden' : ''} max-w-4xl mx-auto`}>
                     <Carousel adaptiveHeight={false} defaultControlsConfig={{
                         nextButtonText: '❯',

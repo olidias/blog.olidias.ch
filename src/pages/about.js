@@ -11,7 +11,7 @@ function About({ data: { about } }) {
             <InitialBanner />
             <Header />
             <Navigation activeIndex={2} />
-            <div>
+            <div className="z-10">
                 <div>
                     <img src={about?.aboutImg?.url} alt={about?.aboutImg?.alt} className="rounded-full w-56 shadow-lg mx-auto sm:my-4 -w-xs hover:scale-110 transition duration-300 ease-in-out" />
                     <h1 className="text-3xl font-thin text-center text-slate-200 mt-9">Hello there! 👋</h1>
