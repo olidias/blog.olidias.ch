@@ -15,7 +15,7 @@ export default function Header() {
     
         document.addEventListener('scroll', event => {
             headerElements.forEach(headerElement => {
-                if (window.scrollY > 250) {
+                if (window.scrollY > 150) {
                     headerElement.classList.add('opacity-0');
                 } else {
                     headerElement.classList.add('opacity-1');
