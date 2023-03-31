@@ -25,7 +25,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     result.data.allArticles.edges.forEach(({ node }) => {
         createPage({
             path: `articles/${node?.slug}`,
-            component: React.lazy(() => blogPostTemplate),
+            component: blogPostTemplate,
             context: {
               slug: node.slug,
             } // additional data can be passed via context
