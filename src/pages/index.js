@@ -16,7 +16,7 @@ function Index({ data: { allArticles } }) {
       <InitialBanner />
       <Header />
       <Navigation />
-      <main className="flex flex-col justify-center items-center z-10">
+      <main className="flex flex-col justify-center items-center z-10 font-didact-gothic">
         {articles.map(article => (
           <ArticleTeaser article={article} key={article.id}></ArticleTeaser>
         ))}

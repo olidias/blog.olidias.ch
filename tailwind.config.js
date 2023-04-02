@@ -34,8 +34,8 @@ module.exports = {
         
       },
       fontFamily: {
-        "explora": ['Explora'],
-        "megrim": ['Megrim']
+        "megrim": ['Megrim'],
+        "didact-gothic": ['Didact Gothic']
       },
       animation: {
         fade: 'fadeOut 500ms ease-in-out 500ms forwards',
