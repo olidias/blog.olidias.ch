@@ -19,7 +19,7 @@ function Gallery({ data: { gallery } }) {
             <InitialBanner />
             <Header />
             <Navigation activeIndex={1} />
-            <div className="z-10 max-w-full h-auto">
+            <div className="z-10 max-w-full h-auto pb-56">
                 <ImageGallery items={galleryImages} />
             </div>
         </Layout>
