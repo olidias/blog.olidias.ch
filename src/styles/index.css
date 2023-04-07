@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Megrim&family=Didact+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Megrim&family=Open+Sans&display=swap');
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
 /* Article image styling */

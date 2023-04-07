@@ -35,7 +35,7 @@ module.exports = {
       },
       fontFamily: {
         "megrim": ['Megrim'],
-        "didact-gothic": ['Didact Gothic']
+        "open-sans": ['Open Sans']
       },
       animation: {
         fade: 'fadeOut 500ms ease-in-out 500ms forwards',
