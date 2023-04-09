@@ -5,9 +5,17 @@ import Layout from '../../components/layout';
 import Header from '../../components/header';
 import Navigation from '../../components/navigation';
 import InitialBanner from "../../components/initial-banner";
-import Carousel from "nuka-carousel/lib/carousel";
+import ImageGallery from 'react-image-gallery';
 
 export default function ArticleTemplate({ data }) {
+    const galleryImages = [];
+    data.datoCmsArticle.articleGallery?.forEach(image => {
+        galleryImages.push({
+            original: image.url,
+            thumbnail: `${image.url}?h=100&w=200`
+        })
+    });
+    
     return (
         <Layout className="w-full h-full">
             <Header />
@@ -15,15 +23,8 @@ export default function ArticleTemplate({ data }) {
             <Navigation />
             <div className="text-slate-200 p-3 rounded z-10 font-open-sans text-xl">
                 <div className={`${data.datoCmsArticle.articleGallery.filter(g => g.customData?.isHeader).length === 0 ? 'hidden' : ''} max-w-4xl mx-auto`}>
-                    <Carousel adaptiveHeight={false} defaultControlsConfig={{
-                        nextButtonText: '❯',
-                        prevButtonText: '❮',
-                        pagingDotsStyle: { margin: '1rem' }
-                    }} className="rounded-sm shadow-lg">
-                        {data.datoCmsArticle.articleGallery?.filter(g => g.customData?.isHeader).map(g => <img src={g.url} alt={g.alt} />)}
-                    </Carousel>
+                    <ImageGallery items={galleryImages} />
                 </div>
-
                 <h1 className="text-3xl leading-tight mb-2 text-left mt-4">{data.datoCmsArticle?.title}</h1>
                 <div>
                     <p className="text-left text-sm mb-3">{moment(data.datoCmsArticle.publicationDate).format('DD.MM.yyyy')}</p>
@@ -31,22 +32,6 @@ export default function ArticleTemplate({ data }) {
                         <p dangerouslySetInnerHTML={{ __html: data.datoCmsArticle?.articleContent }} />
                     </article>
                 </div>
-                <section class="overflow-hidden text-neutral-700 ">
-                    <div class="container mx-auto py-8 ">
-                        <div class="flex flex-wrap md:-m-2">
-                            {data.datoCmsArticle.articleGallery?.filter(g => !g.customData?.isHeader).map(a => 
-                                <div class="flex w-1/3 items-stretch flex-wrap">
-                                    <div class="w-full p-1 md:p-2">
-                                        <img
-                                            alt={a.alt}
-                                            class="block h-full w-full rounded-lg object-cover object-center"
-                                            src={a.url} />
-                                    </div>
-                                </div>)
-                            }
-                        </div>
-                    </div>
-                </section>
             </div>
         </Layout>
     )
