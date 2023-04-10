@@ -21,8 +21,8 @@ export default function ArticleTemplate({ data }) {
             <Header />
             <InitialBanner />
             <Navigation />
-            <div className="text-slate-200 p-3 rounded z-10 font-open-sans text-xl">
-                <div className={`${data.datoCmsArticle.articleGallery.filter(g => g.customData?.isHeader).length === 0 ? 'hidden' : ''} max-w-4xl mx-auto`}>
+            <div className="text-slate-200 p-3 rounded z-10 font-open-sans text-xl  max-w-full">
+                <div className={`mx-auto h-auto ${galleryImages.length === 0 ? `collapse` : ''}`}>
                     <ImageGallery items={galleryImages} />
                 </div>
                 <h1 className="text-3xl leading-tight mb-2 text-left mt-4">{data.datoCmsArticle?.title}</h1>
