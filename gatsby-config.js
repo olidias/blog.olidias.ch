@@ -2,8 +2,10 @@ require("dotenv").config();
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby + Node.js API`,
-    siteUrl: `https://gatsby-template.vercel.app`,
+    title: `Oli Dias - Travelblog and Photography`,
+    siteUrl: `https://blog.olidias.ch`,
+    description: `Modern travelblog and photography website developed and maintained by Oli Dias.`,
+    image: './favicon-32x32.png',
   },
   plugins: [
     {

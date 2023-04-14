@@ -4,6 +4,7 @@ import Navigation from "../components/navigation";
 import Header from "../components/header";
 import InitialBanner from "../components/initial-banner";
 import { graphql } from 'gatsby';
+import { Seo } from "../components/seo";
 
 function About({ data: { about } }) {
     return (
@@ -27,6 +28,26 @@ function About({ data: { about } }) {
     )
 }
 export default About;
+export const Head = () => (
+    <Seo title="About - Oli Dias">
+      <script type="application/ld+json">
+        {`
+      {
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "url": "https://blog.olidias.ch/about",
+          "name": "olidias.ch - About",
+          "creator": {
+            "@type": "Person",
+            "givenName": "Oli",
+            "familyName": "Dias",
+            "additionalName": "Oli"
+          }
+        }
+    `}
+      </script>
+    </Seo>
+  );
 
 export const query = graphql`
 {

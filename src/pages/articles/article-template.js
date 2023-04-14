@@ -1,4 +1,4 @@
-import { graphql } from "gatsby";
+import { Script, graphql } from "gatsby";
 import React from "react";
 import moment from "moment";
 import Layout from "../../components/layout";
@@ -6,6 +6,7 @@ import Header from "../../components/header";
 import Navigation from "../../components/navigation";
 import InitialBanner from "../../components/initial-banner";
 import ImageGallery from "react-image-gallery";
+import { Seo } from "../../components/seo";
 
 export default function ArticleTemplate({ data, pageContext }) {
   const galleryImages = [];
@@ -17,6 +18,24 @@ export default function ArticleTemplate({ data, pageContext }) {
   });
   return (
     <Layout className="h-full w-full">
+        <Seo title={data.datoCmsArticle.title + " - olidias.ch"}>
+            <Script type="application/ld+json">
+            {`
+            {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "url": "https://blog.olidias.ch/articles/${data.datoCmsArticle?.title}",
+                "name": "olidias.ch - Blog",
+                "creator": {
+                    "@type": "Person",
+                    "givenName": "Oli",
+                    "familyName": "Dias",
+                    "additionalName": "Oli"
+                }
+            }
+            `}
+            </Script>
+        </Seo>
       <Header />
       <InitialBanner />
       <Navigation />

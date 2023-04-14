@@ -5,6 +5,7 @@ import Header from "../components/header";
 import InitialBanner from "../components/initial-banner";
 import ImageGallery from 'react-image-gallery';
 import { graphql } from 'gatsby';
+import { Seo } from "../components/seo";
 
 function Gallery({ data: { gallery } }) {
     let galleryImages = [];
@@ -26,6 +27,26 @@ function Gallery({ data: { gallery } }) {
     )
 }
 export default Gallery;
+export const Head = () => (
+  <Seo title="Gallery - Oli Dias">
+    <script type="application/ld+json">
+      {`
+    {
+        "@context": "https://schema.org",
+        "@type": "ImageGallery",
+        "url": "https://blog.olidias.ch/gallery",
+        "name": "olidias.ch - Photography Gallery",
+        "creator": {
+          "@type": "Person",
+          "givenName": "Oli",
+          "familyName": "Dias",
+          "additionalName": "Oli"
+        }
+      }
+  `}
+    </script>
+  </Seo>
+);
 
 export const query = graphql`
 {
