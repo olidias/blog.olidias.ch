@@ -12,6 +12,12 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
             node {
               slug
             }
+            previous {
+              slug
+            }
+            next {
+              slug
+            }
           }
         }
       }
@@ -22,12 +28,14 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
         return
     }
 
-    result.data.allArticles.edges.forEach(({ node }) => {
+    result.data.allArticles.edges.forEach(({ node, previous, next }) => {
         createPage({
             path: `articles/${node?.slug}`,
             component: blogPostTemplate,
             context: {
               slug: node.slug,
+              previousSlug: previous?.slug,
+              nextSlug: next?.slug
             } // additional data can be passed via context
         })
     })
