@@ -39,8 +39,14 @@ module.exports = {
         name: "pages"
       }
     },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        icon: `src/styles/assets/favicon.png`, // This path is relative to the root of the site.
+      },
+    },
     `gatsby-plugin-image`,
     `gatsby-plugin-catch-links`,
-    'gatsby-plugin-postcss'
+    `gatsby-plugin-postcss`,
   ]
 }

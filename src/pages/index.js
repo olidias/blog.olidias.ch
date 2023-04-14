@@ -27,18 +27,17 @@ function Index({ data: { allArticles } }) {
 
 export default Index;
 
-export const query = graphql`
-{
-  allArticles: allDatoCmsArticle(sort: {fields: publicationDate, order:DESC}) {
+export const query = graphql`{
+  allArticles: allDatoCmsArticle(sort: {publicationDate: DESC}) {
     nodes {
-        id
-        title
-        slug
-        publicationDate
-        coverImage {
-          url
-          alt
-        }
+      id
+      title
+      slug
+      publicationDate
+      coverImage {
+        url
+        alt
+      }
     }
   }
 }`
