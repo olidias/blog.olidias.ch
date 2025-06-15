@@ -1,21 +1,41 @@
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 
-const TripMap = ({ articles = [], tripColor = '#4F46E5', className = 'h-96' }) => {
+const TripMap = ({ articles = [], className = 'h-96' }) => {
   const mapRef = useRef();
   const [map, setMap] = useState(null);
   const [isClient, setIsClient] = useState(false);
 
-  // Filter articles with location data
+  // Group articles by trip
+  const trips = useMemo(() => {
+    const tripMap = new Map();
+    
+    articles.forEach(article => {
+      if (!article?.location?.latitude || !article?.location?.longitude || !article?.tripReference) return;
+      
+      const tripId = article.tripReference.id;
+      if (!tripMap.has(tripId)) {
+        tripMap.set(tripId, {
+          id: tripId,
+          color: article.tripReference.color?.hex || '#4F46E5',
+          title: article.tripReference.title,
+          articles: []
+        });
+      }
+      tripMap.get(tripId).articles.push(article);
+    });
+    
+    // Sort articles within each trip by date
+    tripMap.forEach(trip => {
+      trip.articles.sort((a, b) => new Date(a.publicationDate) - new Date(b.publicationDate));
+    });
+    
+    return Array.from(tripMap.values());
+  }, [articles]);
+  
+  // Get all articles with location for the map
   const articlesWithLocation = useMemo(
     () => articles.filter(article => article?.location?.latitude && article?.location?.longitude),
     [articles]
-  );
-
-  // Sort articles by publication date for the polyline
-  const sortedArticles = useMemo(() => 
-    [...articlesWithLocation].sort((a, b) =>
-      new Date(a.publicationDate) - new Date(b.publicationDate)
-    ), [articlesWithLocation]
   );
 
   // Calculate center from articles or use default
@@ -40,13 +60,13 @@ const TripMap = ({ articles = [], tripColor = '#4F46E5', className = 'h-96' }) =
       try {
         const L = await import('leaflet');
         
-        // Fix for default markers - only run on client
+        // Create a custom icon
         if (typeof window !== 'undefined') {
           delete L.Icon.Default.prototype._getIconUrl;
           L.Icon.Default.mergeOptions({
-            iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-            iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-            shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+            iconRetinaUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMTYwIDBDOTguMDIgMCA0OCA1MC4xNCA0OCAxMTJjMCA3MC43IDkzLjI3IDEyOC4zNiAxMDEuMDMgMTMzLjE4YzEuOTQgMS4yMiA0LjE2IDEuODIgNi4zOCAxLjgyYzIuMjIgMCA0LjQ0LS42IDYuMzgtMS44MkMxNzguNzMgMjQwLjM2IDI3MiAxODIuNyAyNzIgMTEyQzI3MiA1MC4xNCAyMjEuOTggMCAxNjAgMFoiLz48cGF0aCBmaWxsPSIjMDA3M0YyIiBkPSJNMTYwIDBDMjIxLjk4IDAgMjcyIDUwLjE0IDI3MiAxMTJjMCA3MC43LTkzLjI3IDEyOC4zNi0xMDEuMDMgMTMzLjE4Yy0xLjk0IDEuMjItNC4xNiAxLjgyLTYuMzggMS44MmMtMi4yMiAwLTQuNDQtLjYtNi4zOC0xLjgyQzE0OS4yNyAyNDAuMzYgNTYgMTgyLjcgNTYgMTEyQzU2IDUwLjE0IDEwNi4wMiAwIDE2MCAwek0xNjAgMTYwYzI2LjUxIDAgNDgtMjEuNDkgNDgtNDhzLTIxLjQ5LTQ4LTQ4LTQ4cy00OCAyMS40OS00OCA0OFMxMzMuNSAxNjAgMTYwIDE2MHoiLz48L3N2Zz4=',
+            iconUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMTYwIDBDOTguMDIgMCA0OCA1MC4xNCA0OCAxMTJjMCA3MC43IDkzLjI3IDEyOC4zNiAxMDEuMDMgMTMzLjE4YzEuOTQgMS4yMiA0LjE2IDEuODIgNi4zOCAxLjgyYzIuMjIgMCA0LjQ0LS42IDYuMzgtMS44MkMxNzguNzMgMjQwLjM2IDI3MiAxODIuNyAyNzIgMTEyQzI3MiA1MC4xNCAyMjEuOTggMCAxNjAgMFoiLz48cGF0aCBmaWxsPSIjMDA3M0YyIiBkPSJNMTYwIDBDMjIxLjk4IDAgMjcyIDUwLjE0IDI3MiAxMTJjMCA3MC43LTkzLjI3IDEyOC4zNi0xMDEuMDMgMTMzLjE4Yy0xLjk0IDEuMjItNC4xNiAxLjgyLTYuMzggMS44MmMtMi4yMiAwLTQuNDQtLjYtNi4zOC0xLjgyQzE0OS4yNyAyNDAuMzYgNTYgMTgyLjcgNTYgMTEyQzU2IDUwLjE0IDEwNi4wMiAwIDE2MCAwek0xNjAgMTYwYzI2LjUxIDAgNDgtMjEuNDkgNDgtNDhzLTIxLjQ5LTQ4LTQ4LTQ4cy00OCAyMS40OS00OCA0OFMxMzMuNSAxNjAgMTYwIDE2MHoiLz48L3N2Zz4=',
+            shadowUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNzUgNDAwIj48ZmlsdGVyIGlkPSJkcm9wLXNoYWRvdyIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PEZlR2F1c2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI1Ii8+PC9maWx0ZXI+PHBhdGggZmlsdGVyPSJ1cmwoI2Ryb3Atc2hhZG93KSIgZmlsbD0icmdiYSgwLDAsMCwwLjMpIiBkPSJNMTM3LjUgMjAwYzAtMzcuOSAzMC43LTY4LjYgNjguNS02OC42czY4LjUgMzAuNyA2OC41IDY4LjZzLTMwLjcgNjguNS02OC41IDY4LjVzLTY4LjUtMzAuNy02OC41LTY4LjV6Ii8+PC9zdmc+',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
@@ -57,7 +77,7 @@ const TripMap = ({ articles = [], tripColor = '#4F46E5', className = 'h-96' }) =
         const mapInstance = L.map(mapRef.current, {
           center,
           zoom: articlesWithLocation.length === 1 ? 13 : 2,
-          scrollWheelZoom: false
+          scrollWheelZoom: true
         });
 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -96,66 +116,130 @@ const TripMap = ({ articles = [], tripColor = '#4F46E5', className = 'h-96' }) =
       });
 
       const bounds = L.latLngBounds();
+      const markers = [];
 
-      // Add markers for each article
-      articlesWithLocation.forEach((article) => {
-        const position = [article.location.latitude, article.location.longitude];
-        bounds.extend(position);
+      // Process each trip
+      trips.forEach(trip => {
+        const tripArticles = trip.articles.filter(a => a.location?.latitude && a.location?.longitude);
+        if (tripArticles.length === 0) return;
 
-        const marker = L.marker(position).addTo(map);
-        
-        // Create popup content
-        const popupContent = `
-          <div style="width: 200px;">
-            ${article.coverImage?.url ? `
-              <img 
-                src="${article.coverImage.url}?w=300&h=200&fit=crop&crop=faces,center" 
-                alt="${article.coverImage.alt || article.title}"
-                style="width: 100%; height: 96px; object-fit: cover; border-radius: 4px 4px 0 0;"
-              />
-            ` : ''}
-            <div style="padding: 8px;">
-              <h4 style="font-weight: 600; font-size: 14px; margin: 0 0 4px 0;">${article.title}</h4>
-              <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">
-                ${new Date(article.publicationDate).toLocaleDateString()}
-              </p>
-              <a 
-                href="/articles/${article.slug}"
-                style="font-size: 12px; color: #2563eb; text-decoration: none;"
-                onmouseover="this.style.textDecoration='underline'"
-                onmouseout="this.style.textDecoration='none'"
-              >
-                Read more →
-              </a>
+        // Add markers for each article in trip
+        tripArticles.forEach((article, index) => {
+          const position = [article.location.latitude, article.location.longitude];
+          bounds.extend(position);
+          
+          // Create a custom icon with the trip color
+          const customIcon = L.divIcon({
+            html: `
+              <div style="
+                background: ${trip.color};
+                width: 24px;
+                height: 24px;
+                border-radius: 50% 50% 50% 0;
+                transform: rotate(-45deg);
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 0 8px rgba(0,0,0,0.2);
+              ">
+                <div style="
+                  transform: rotate(45deg);
+                  color: white;
+                  font-weight: bold;
+                  font-size: 12px;
+                  text-align: center;
+                  line-height: 1;
+                  padding-top: 2px;
+                ">
+                  ${index + 1}
+                </div>
+              </div>
+            `,
+            className: '',
+            iconSize: [24, 24],
+            iconAnchor: [12, 24],
+            popupAnchor: [0, -24]
+          });
+
+          const marker = L.marker(position, { icon: customIcon }).addTo(map);
+          markers.push(marker);
+          
+          // Create popup content
+          const popupContent = `
+            <div style="width: 200px;">
+              ${article.coverImage?.url ? `
+                <img 
+                  src="${article.coverImage.url}?w=300&h=200&fit=crop&crop=faces,center" 
+                  alt="${article.coverImage.alt || article.title}"
+                  style="width: 100%; height: 96px; object-fit: cover; border-radius: 4px 4px 0 0;"
+                />
+              ` : ''}
+              <div style="padding: 8px;">
+                <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                  <div style="
+                    width: 12px;
+                    height: 12px;
+                    background: ${trip.color};
+                    border-radius: 50%;
+                    margin-right: 6px;
+                    flex-shrink: 0;
+                  "></div>
+                  <h4 style="font-weight: 600; font-size: 14px; margin: 0;">${article.title}</h4>
+                </div>
+                <p style="font-size: 12px; color: #666; margin: 0 0 8px 18px;">
+                  ${new Date(article.publicationDate).toLocaleDateString()}
+                </p>
+                <a 
+                  href="/articles/${article.slug}"
+                  style="font-size: 12px; color: #2563eb; text-decoration: none; margin-left: 18px;"
+                  onmouseover="this.style.textDecoration='underline'"
+                  onmouseout="this.style.textDecoration='none'"
+                >
+                  Read more →
+                </a>
+              </div>
             </div>
-          </div>
-        `;
+          `;
 
-        marker.bindPopup(popupContent);
+          marker.bindPopup(popupContent);
+        });
+
+        // Add polyline connecting locations in chronological order for this trip
+        if (trip.articles.length > 1) {
+          const polylinePositions = trip.articles
+            .filter(a => a.location?.latitude && a.location?.longitude)
+            .map(article => [article.location.latitude, article.location.longitude]);
+
+          if (polylinePositions.length > 1) {
+            L.polyline(polylinePositions, {
+              color: trip.color,
+              weight: 3,
+              opacity: 0.8,
+              lineJoin: 'round',
+              dashArray: '5, 5',
+              dashOffset: '10'
+            }).addTo(map);
+          }
+        }
       });
 
-      // Add polyline connecting locations in chronological order
-      if (sortedArticles.length > 1) {
-        const polylinePositions = sortedArticles.map(article => [
-          article.location.latitude,
-          article.location.longitude
-        ]);
-
-        L.polyline(polylinePositions, {
-          color: tripColor,
-          weight: 2,
-          opacity: 0.7
-        }).addTo(map);
+      // Fit map to bounds if there are locations
+      if (markers.length > 0) {
+        map.fitBounds(bounds, { 
+          padding: [50, 50],
+          maxZoom: 12 // Prevent too much zoom for single locations
+        });
       }
 
-      // Fit map to bounds if multiple locations
-      if (articlesWithLocation.length > 1) {
-        map.fitBounds(bounds, { padding: [50, 50] });
+      // Add a small zoom out if there's only one location
+      if (markers.length === 1) {
+        map.setZoom(10);
       }
     };
 
     setupMapContent();
-  }, [map, isClient, articlesWithLocation, sortedArticles, tripColor]);
+  }, [map, isClient, articlesWithLocation]);
 
   // Show loading state during SSR or while initializing
   if (!isClient) {

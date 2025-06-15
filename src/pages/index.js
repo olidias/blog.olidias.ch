@@ -6,7 +6,6 @@ import Header from '../components/header';
 import Navigation from '../components/navigation';
 import ArticleTeaser from './article-teaser';
 import InitialBanner from '../components/initial-banner';
-import TripMapClient from '../components/TripMapClient';
 import TripMap from '../components/TripMap';
 import { Seo } from '../components/seo';
 
@@ -41,11 +40,7 @@ function Index({ data: { allArticles, allTrips } }) {
               articles={allArticlesWithLocations}
               className="h-96"
             />
-            <div className="p-4 border-t border-gray-100">
-              <p className="text-sm text-gray-500 text-center">
-                Click on a marker to see article details and navigate to the full post
-              </p>
-            </div>
+          
           </div>
         </section>
 
