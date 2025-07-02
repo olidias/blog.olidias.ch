@@ -67,8 +67,8 @@ function Index({ data: { allArticles, allTrips, about } }) {
                     <div>
                       <h3 className="text-2xl font-bold text-white">{trip.title}</h3>
                       <p className="text-gray-200">
-                        {new Date(trip.startDate).toLocaleDateString()} -
-                        {trip.endDate ? new Date(trip.endDate).toLocaleDateString() : 'Ongoing'}
+                        {new Date(trip.startDate).toLocaleDateString('de-CH')} -
+                        {trip.endDate ? new Date(trip.endDate).toLocaleDateString('de-CH') : 'Ongoing'}
                       </p>
                     </div>
                   </div>

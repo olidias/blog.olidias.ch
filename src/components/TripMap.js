@@ -7,28 +7,32 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
 
   // Group articles by trip
   const trips = useMemo(() => {
+    if (articles.length > 0 && articles.every(a => a.tripReference == null)) {
+      // If no tripReference, treat all as one trip
+      return [{
+        id: 'single',
+        color: '#4F46E5',
+        title: 'Trip',
+        articles: articles
+      }];
+    }
     const tripMap = new Map();
-    
     articles.forEach(article => {
-      if (!article?.location?.latitude || !article?.location?.longitude || !article?.tripReference) return;
-      
-      const tripId = article.tripReference.id;
+      if (!article?.location?.latitude || !article?.location?.longitude) return;
+      const tripId = article.tripReference?.id || 'single';
       if (!tripMap.has(tripId)) {
         tripMap.set(tripId, {
           id: tripId,
-          color: article.tripReference.color?.hex || '#4F46E5',
-          title: article.tripReference.title,
+          color: article.tripReference?.color?.hex || '#4F46E5',
+          title: article.tripReference?.title || 'Trip',
           articles: []
         });
       }
       tripMap.get(tripId).articles.push(article);
     });
-    
-    // Sort articles within each trip by date
     tripMap.forEach(trip => {
       trip.articles.sort((a, b) => new Date(a.publicationDate) - new Date(b.publicationDate));
     });
-    
     return Array.from(tripMap.values());
   }, [articles]);
   

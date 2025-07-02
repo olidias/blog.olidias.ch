@@ -11,6 +11,9 @@ import TripMap from '../../components/TripMap';
 export default function TripTemplate({ data: { datoCmsTrip, allArticles } }) {
   const articles = allArticles.nodes;
   
+  // Sort articles by publicationDate ascending for consistent order
+  const sortedArticles = [...articles].sort((a, b) => new Date(a.publicationDate) - new Date(b.publicationDate));
+
   return (
     <Layout className="min-h-screen bg-gray-50">
       <Seo title={`${datoCmsTrip.title} - Trips`} />
@@ -24,13 +27,11 @@ export default function TripTemplate({ data: { datoCmsTrip, allArticles } }) {
           className="relative h-64 rounded-lg overflow-hidden mb-8"
           style={{
             backgroundImage: `url(${datoCmsTrip.coverImage.url})`,
-            backgroundColor: datoCmsTrip.color.hex,
-            backgroundBlendMode: 'overlay',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-end p-8">
+          <div className="absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-t from-black/40 to-transparent">
             <h1 className="text-4xl font-bold text-white">{datoCmsTrip.title}</h1>
             <p className="text-xl text-gray-200 mt-2">
               {new Date(datoCmsTrip.startDate).toLocaleDateString()} - 
@@ -43,8 +44,8 @@ export default function TripTemplate({ data: { datoCmsTrip, allArticles } }) {
 
         {/* Trip Description */}
         {datoCmsTrip.description && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <p className="text-gray-700 text-lg">{datoCmsTrip.description}</p>
+          <div className="border-l-4 border-accent-1 bg-background px-6 py-4 mb-8">
+            <p className="text-text-muted italic text-lg">{datoCmsTrip.description}</p>
           </div>
         )}
 
@@ -54,7 +55,7 @@ export default function TripTemplate({ data: { datoCmsTrip, allArticles } }) {
           <p className="px-6 text-gray-600 mb-4">Explore the journey through the map below</p>
           <div className="border-t border-gray-100">
             <TripMap
-              articles={articles} 
+              articles={sortedArticles}
               className="h-96"
               tripColor={datoCmsTrip.color?.hex || '#4F46E5'}
             />
@@ -70,9 +71,9 @@ export default function TripTemplate({ data: { datoCmsTrip, allArticles } }) {
             </span>
           </div>
           
-          {articles.length > 0 ? (
+          {sortedArticles.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {articles.map(article => (
+              {sortedArticles.map(article => (
                 <ArticleTeaser 
                   article={article} 
                   key={article.id} 
