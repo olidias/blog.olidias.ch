@@ -39,7 +39,7 @@ export default function ArticleTemplate({ data, pageContext }) {
       <Header />
       <InitialBanner />
       <Navigation />
-      <div className="z-10 max-w-full rounded p-3 font-open-sans text-xl  text-slate-200">
+      <div className="z-10 max-w-full rounded p-3 font-open-sans text-xl text-text-main">
         <div
           className={`mx-auto h-auto ${
             galleryImages.length === 0 ? `collapse` : ""
