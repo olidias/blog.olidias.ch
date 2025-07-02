@@ -260,7 +260,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
   }
 
   return (
-    <div className={`${className} rounded-lg overflow-hidden`}>
+    <div className={`${className} rounded-lg overflow-hidden z-0 relative`}>
       <div ref={mapRef} style={{ height: '100%', width: '100%' }} />
     </div>
   );

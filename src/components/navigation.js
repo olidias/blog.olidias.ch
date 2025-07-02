@@ -2,12 +2,12 @@ import React from "react";
 
 export default function Navigation({activeIndex = 0}) {
     return (
-        <div id="navigation" className="mt-[calc(50vh-4rem)] z-10 font-megrim text-2xl text-gray-100">
-            <ul className="flex flex-row items-stretch w-full">
-                <li className={`sm:mx-8 my-9 mx-4 border-b-4 border-b-transparent ${activeIndex === 0 ? 'font-extrabold border-b-2 border-b-gray-100' : 'hover:font-extrabold'}`}><a href="/">BLOG</a></li>
-                <li className={`sm:mx-8 my-9 mx-4 border-b-4 border-b-transparent ${activeIndex === 1 ? 'font-extrabold border-b-2 border-b-gray-100' : 'hover:font-extrabold'}`}><a href="/gallery">GALLERY</a></li>
-                <li className={`sm:mx-8 my-9 mx-4 border-b-4 border-b-transparent ${activeIndex === 2 ? 'font-extrabold border-b-2 border-b-gray-100' : 'hover:font-extrabold'}`}><a href="/about">ABOUT</a></li>
+        <nav className="fixed top-0 left-0 w-full bg-white border-b border-border shadow z-40 flex justify-center">
+            <ul className="flex flex-row items-center h-16">
+                <li className={`mx-6 text-lg font-semibold ${activeIndex === 0 ? 'text-accent-1 border-b-2 border-accent-1' : 'text-text-muted hover:text-accent-1'} transition-colors`}><a href="/">BLOG</a></li>
+                <li className={`mx-6 text-lg font-semibold ${activeIndex === 1 ? 'text-accent-1 border-b-2 border-accent-1' : 'text-text-muted hover:text-accent-1'} transition-colors`}><a href="/gallery">GALLERY</a></li>
+                <li className={`mx-6 text-lg font-semibold ${activeIndex === 2 ? 'text-accent-1 border-b-2 border-accent-1' : 'text-text-muted hover:text-accent-1'} transition-colors`}><a href="/about">ABOUT</a></li>
             </ul>
-        </div>
+        </nav>
     )
 }

@@ -16,7 +16,7 @@ export default function ArticleTeaser({ article, showTripInfo = true }) {
         className="h-48 bg-cover bg-center relative"
         style={{
           backgroundImage: hasCoverImage ? `url(${article.coverImage.url}?w=600&h=300&fit=crop&crop=faces,center)` : 'none',
-          backgroundColor: hasCoverImage ? 'transparent' : tripColor,
+          backgroundColor: hasCoverImage ? 'transparent' : 'var(--tw-color-accent-1)',
         }}
       >
         {!hasCoverImage && (

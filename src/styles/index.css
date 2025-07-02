@@ -12,3 +12,11 @@ article p p {
 p img {
     @apply my-5 shadow-2xl rounded flex;
 }
+
+body, html {
+  @apply font-sans bg-background text-text-main;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-sans text-text-main;
+}

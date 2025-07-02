@@ -1,9 +1,12 @@
 import React from "react";
 
-export default function InitialBanner() {
+export default function HeroSection({ children }) {
     return (
-        <div>
-            <div className="bg-header-background fixed min-h-1/2 min-w-full bg-cover bg-no-repeat top-0 left-0 transition-opacity duration-200 disappear-on-scroll"></div>
-        </div>
+        <section className="relative w-full h-[350px] flex items-center justify-center mb-8">
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('./assets/header-background.webp')", opacity: 0.18 }}></div>
+            <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
+                {children}
+            </div>
+        </section>
     )
 }

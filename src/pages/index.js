@@ -5,11 +5,11 @@ import Layout from '../components/layout';
 import Header from '../components/header';
 import Navigation from '../components/navigation';
 import ArticleTeaser from './article-teaser';
-import InitialBanner from '../components/initial-banner';
+import HeroSection from '../components/initial-banner';
 import TripMap from '../components/TripMap';
 import { Seo } from '../components/seo';
 
-function Index({ data: { allArticles, allTrips } }) {
+function Index({ data: { allArticles, allTrips, about } }) {
   const articles = allArticles.nodes;
   const trips = allTrips.nodes;
 
@@ -28,25 +28,32 @@ function Index({ data: { allArticles, allTrips } }) {
 
   return (
     <Layout className="w-full min-h-screen bg-gray-50">
-      <InitialBanner />
-      <Header />
       <Navigation />
+      <HeroSection>
+        <Header />
+      </HeroSection>
+      {/* Intro Section */}
+      <section className="w-full flex flex-col items-center justify-center py-12 mb-8">
+        <h2 className="text-3xl font-bold mb-4 text-text-main">Meet Oli & Anna</h2>
+        <div className="max-w-2xl text-center text-lg text-text-muted">
+          <div dangerouslySetInnerHTML={{ __html: about?.aboutArticle?.split('\n')[0] }} />
+        </div>
+      </section>
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Map Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6 text-gray-800">Travel Map</h2>
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <h2 className="text-3xl font-bold mb-6 text-text-main text-center">Follow our travel route</h2>
+          <div className="rounded-lg shadow-md overflow-hidden">
             <TripMap
               articles={allArticlesWithLocations}
               className="h-96"
             />
-          
           </div>
         </section>
 
         {/* Trips Section */}
         <section>
-          <h2 className="text-3xl font-bold mb-6 text-gray-800">My Trips</h2>
+          <h2 className="text-3xl font-bold mb-6 text-text-main">Trips</h2>
           <div className="space-y-12">
             {articlesByTrip.map((trip) => (
               <div key={trip.id} className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -54,11 +61,9 @@ function Index({ data: { allArticles, allTrips } }) {
                   className="h-48 bg-cover bg-center relative"
                   style={{
                     backgroundImage: `url(${trip.coverImage.url})`,
-                    backgroundColor: trip.color.hex,
-                    backgroundBlendMode: 'overlay'
                   }}
                 >
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-end p-6">
+                  <div className="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/40 to-transparent">
                     <div>
                       <h3 className="text-2xl font-bold text-white">{trip.title}</h3>
                       <p className="text-gray-200">
@@ -68,25 +73,21 @@ function Index({ data: { allArticles, allTrips } }) {
                     </div>
                   </div>
                 </div>
-
                 <div className="p-6">
                   {trip.description && (
-                    <p className="text-gray-600 mb-6">{trip.description}</p>
+                    <p className="text-text-muted mb-6 italic">{trip.description}</p>
                   )}
-
-                  <h4 className="text-xl font-semibold mb-4 text-gray-800">Latest Articles</h4>
+                  <h4 className="text-xl font-semibold mb-4 text-text-main">Latest Articles</h4>
                   <div className="grid md:grid-cols-3 gap-6">
                     {trip.articles.slice(0, 3).map(article => (
                       <ArticleTeaser article={article} key={article.id} />
                     ))}
                   </div>
-
                   {trip.articles.length > 3 && (
                     <div className="mt-6 text-center">
                       <a
                         href={`/trips/${trip.tripId}`}
-                        className="inline-block px-6 py-2 rounded-md text-white"
-                        style={{ backgroundColor: trip.color.hex }}
+                        className="inline-block px-6 py-2 rounded-md text-white bg-accent-1 hover:bg-accent-2 transition-colors"
                       >
                         View all articles from this trip
                       </a>
@@ -150,5 +151,8 @@ export const query = graphql`{
       startDate
       endDate
     }
+  }
+  about: datoCmsAbout {
+    aboutArticle
   }
 }`
