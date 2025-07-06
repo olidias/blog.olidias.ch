@@ -7,6 +7,7 @@ import Navigation from "../../components/navigation";
 import InitialBanner from "../../components/initial-banner";
 import ImageGallery from "react-image-gallery";
 import { Seo } from "../../components/seo";
+import CommentSection from "../../components/CommentSection";
 
 export default function ArticleTemplate({ data, pageContext }) {
   const galleryImages = [];
@@ -59,6 +60,12 @@ export default function ArticleTemplate({ data, pageContext }) {
                 __html: data.datoCmsArticle?.articleContent,
               }}/>
           </article>
+          
+          {/* Comments Section */}
+          <CommentSection 
+            articleId={data.datoCmsArticle.id}
+            articleSlug={data.datoCmsArticle.slug}
+          />
           <div className="mt-10 flex flex-row flex-nowrap justify-between italic">
             <div
               className={`${pageContext.nextSlug ? "" : "invisible"}  w-30
@@ -69,12 +76,12 @@ export default function ArticleTemplate({ data, pageContext }) {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="mr-0.5 mt-0.5 h-6 w-6 pt-0.5">
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"/>
                 </svg>
                 Previous Article
@@ -90,12 +97,12 @@ export default function ArticleTemplate({ data, pageContext }) {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="ml-2 mt-0.5 h-6 w-6 pt-0.5">
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/>
                 </svg>
               </a>

@@ -35,7 +35,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
     });
     return Array.from(tripMap.values());
   }, [articles]);
-  
+
   // Get all articles with location for the map
   const articlesWithLocation = useMemo(
     () => articles.filter(article => article?.location?.latitude && article?.location?.longitude),
@@ -63,7 +63,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
     const initializeMap = async () => {
       try {
         const L = await import('leaflet');
-        
+
         // Create a custom icon
         if (typeof window !== 'undefined') {
           delete L.Icon.Default.prototype._getIconUrl;
@@ -103,7 +103,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
         setMap(null);
       }
     };
-  }, [isClient, center, articlesWithLocation.length]);
+  }, [map, isClient, center, articlesWithLocation.length]);
 
   // Map content effect - runs when map is ready and articles change
   useEffect(() => {
@@ -111,7 +111,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
 
     const setupMapContent = async () => {
       const L = await import('leaflet');
-      
+
       // Clear existing layers
       map.eachLayer((layer) => {
         if (layer instanceof L.Marker || layer instanceof L.Polyline) {
@@ -131,7 +131,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
         tripArticles.forEach((article, index) => {
           const position = [article.location.latitude, article.location.longitude];
           bounds.extend(position);
-          
+
           // Create a custom icon with the trip color
           const customIcon = L.divIcon({
             html: `
@@ -168,7 +168,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
 
           const marker = L.marker(position, { icon: customIcon }).addTo(map);
           markers.push(marker);
-          
+
           // Create popup content
           const popupContent = `
             <div style="width: 200px;">
@@ -230,7 +230,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
 
       // Fit map to bounds if there are locations
       if (markers.length > 0) {
-        map.fitBounds(bounds, { 
+        map.fitBounds(bounds, {
           padding: [50, 50],
           maxZoom: 12 // Prevent too much zoom for single locations
         });
@@ -243,7 +243,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
     };
 
     setupMapContent();
-  }, [map, isClient, articlesWithLocation]);
+  }, [map, trips, isClient, articlesWithLocation]);
 
   // Show loading state during SSR or while initializing
   if (!isClient) {

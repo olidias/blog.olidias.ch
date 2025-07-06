@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-let hasAnimated = false;
 export default function Header() {
     const r = (
         <div className="w-full flex-col flex items-center justify-center text-text-main bg-transparent py-16">
@@ -9,7 +8,6 @@ export default function Header() {
             </div>
         </div>
     );
-    hasAnimated = true;
     useEffect(() => {
         const headerElements = document.querySelectorAll('.disappear-on-scroll');
     

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@loadable/component": "^5.16.7",
+    "datocms-client": "^3.4.0",
     "dotenv": "^16.0.3",
     "gatsby": "^5.8.1",
     "gatsby-plugin-catch-links": "^5.8.0",
@@ -24,7 +25,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-image-gallery": "^1.2.11",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "vercel": "^44.2.12"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
