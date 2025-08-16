@@ -18,7 +18,6 @@ export default function TripTemplate({ data: { datoCmsTrip, allArticles } }) {
     <Layout className="min-h-screen bg-gray-50">
       <Seo title={`${datoCmsTrip.title} - Trips`} />
       <Header />
-      <InitialBanner />
       <Navigation />
       
       <main className="container mx-auto px-4 py-8 max-w-6xl">

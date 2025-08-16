@@ -4,7 +4,6 @@ import moment from "moment";
 import Layout from "../../components/layout";
 import Header from "../../components/header";
 import Navigation from "../../components/navigation";
-import InitialBanner from "../../components/initial-banner";
 import ImageGallery from "react-image-gallery";
 import { Seo } from "../../components/seo";
 
@@ -37,7 +36,6 @@ export default function ArticleTemplate({ data, pageContext }) {
             </Script>
         </Seo>
       <Header />
-      <InitialBanner />
       <Navigation />
       <div className="z-10 max-w-full rounded p-3 font-open-sans text-xl text-text-main">
         <div

@@ -8,6 +8,7 @@ import ArticleTeaser from './article-teaser';
 import HeroSection from '../components/initial-banner';
 import TripMap from '../components/TripMap';
 import { Seo } from '../components/seo';
+import TripCard from '../components/TripCard';
 
 function Index({ data: { allArticles, allTrips, about } }) {
   const articles = allArticles.nodes;
@@ -32,17 +33,18 @@ function Index({ data: { allArticles, allTrips, about } }) {
       <HeroSection>
         <Header />
       </HeroSection>
-      {/* Intro Section */}
       <section className="w-full flex flex-col items-center justify-center py-12 mb-8">
         <h2 className="text-3xl font-bold mb-4 text-text-main">Meet Oli & Anna</h2>
         <div className="max-w-2xl text-center text-lg text-text-muted">
-          <div dangerouslySetInnerHTML={{ __html: about?.aboutArticle?.split('\n')[0] }} />
+          <img src="/static/meet-oli-anna.webp" alt="Oli & Anna" className="rounded-xl mb-4 w-48 h-48 object-cover mx-auto" />
+          <p>
+            We're a couple based in Switzerland enjoying life whilst finding what the world has to offer. We enjoy reliving wonderful moments through this blog, and it's even better if you can enjoy it too!
+          </p>
         </div>
       </section>
       <main className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Map Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-6 text-text-main text-center">Follow our travel route</h2>
+          <h2 className="text-3xl font-bold mb-6 text-text-main text-center">Follow our current travel route</h2>
           <div className="rounded-lg shadow-md overflow-hidden">
             <TripMap
               articles={allArticlesWithLocations}
@@ -51,53 +53,27 @@ function Index({ data: { allArticles, allTrips, about } }) {
           </div>
         </section>
 
-        {/* Trips Section */}
-        <section>
-          <h2 className="text-3xl font-bold mb-6 text-text-main">Trips</h2>
-          <div className="space-y-12">
-            {articlesByTrip.map((trip) => (
-              <div key={trip.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div
-                  className="h-48 bg-cover bg-center relative"
-                  style={{
-                    backgroundImage: `url(${trip.coverImage.url})`,
-                  }}
-                >
-                  <div className="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/40 to-transparent">
-                    <div>
-                      <h3 className="text-2xl font-bold text-white">{trip.title}</h3>
-                      <p className="text-gray-200">
-                        {new Date(trip.startDate).toLocaleDateString('de-CH')} -
-                        {trip.endDate ? new Date(trip.endDate).toLocaleDateString('de-CH') : 'Ongoing'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6">
-                  {trip.description && (
-                    <p className="text-text-muted mb-6 italic">{trip.description}</p>
-                  )}
-                  <h4 className="text-xl font-semibold mb-4 text-text-main">Latest Articles</h4>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    {trip.articles.slice(0, 3).map(article => (
-                      <ArticleTeaser article={article} key={article.id} />
-                    ))}
-                  </div>
-                  {trip.articles.length > 3 && (
-                    <div className="mt-6 text-center">
-                      <a
-                        href={`/trips/${trip.tripId}`}
-                        className="inline-block px-6 py-2 rounded-md text-white bg-accent-1 hover:bg-accent-2 transition-colors"
-                      >
-                        View all articles from this trip
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* Current Trip Section */}
+        {articlesByTrip.length > 0 && (
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold mb-6 text-text-main">Current Trip</h2>
+            <div className="space-y-12">
+              <TripCard trip={articlesByTrip[0]} />
+            </div>
+          </section>
+        )}
+
+        {/* Older Trips Section */}
+        {articlesByTrip.length > 1 && (
+          <section>
+            <h2 className="text-3xl font-bold mb-6 text-text-main">Older Trips</h2>
+            <div className="space-y-12">
+              {articlesByTrip.slice(1).map((trip) => (
+                <TripCard trip={trip} key={trip.id} />
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </Layout>
   );
