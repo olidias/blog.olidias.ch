@@ -11,7 +11,6 @@ export default function ArticleTeaser({ article, showTripInfo = true }) {
 
   return (
     <div className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 bg-white">
-      {/* Cover Image */}
       <div
         className="h-48 bg-cover bg-center relative"
         style={{

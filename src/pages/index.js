@@ -36,7 +36,7 @@ function Index({ data: { allArticles, allTrips, about } }) {
       <section className="w-full flex flex-col items-center justify-center py-12 mb-8">
         <h2 className="text-3xl font-bold mb-4 text-text-main">Meet Oli & Anna</h2>
         <div className="max-w-2xl text-center text-lg text-text-muted">
-          <img src="/static/meet-oli-anna.webp" alt="Oli & Anna" className="rounded-xl mb-4 w-48 h-48 object-cover mx-auto" />
+          <img src="/img/meet-oli-anna.webp" alt="Oli & Anna" className="rounded-xl mb-4 w-48 h-48 object-cover mx-auto" />
           <p>
             We're a couple based in Switzerland enjoying life whilst finding what the world has to offer. We enjoy reliving wonderful moments through this blog, and it's even better if you can enjoy it too!
           </p>
