@@ -103,7 +103,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
         setMap(null);
       }
     };
-  }, [isClient, center, articlesWithLocation.length]);
+  }, [isClient, center, articlesWithLocation.length, map]);
 
   // Map content effect - runs when map is ready and articles change
   useEffect(() => {
@@ -123,48 +123,48 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
       const markers = [];
 
       // Process each trip
-      trips.forEach(trip => {
-        const tripArticles = trip.articles.filter(a => a.location?.latitude && a.location?.longitude);
-        if (tripArticles.length === 0) return;
+      const lastTrip = trips.sort((a,b) => a.start_date - b.start_date)[0];
+      const tripArticles = lastTrip.articles.filter(a => a.location?.latitude && a.location?.longitude);
+      if (tripArticles.length === 0) return;
 
-        // Add markers for each article in trip
-        tripArticles.forEach((article, index) => {
-          const position = [article.location.latitude, article.location.longitude];
-          bounds.extend(position);
-          
-          // Create a custom icon with the trip color
-          const customIcon = L.divIcon({
-            html: `
+      // Add markers for each article in trip
+      tripArticles.forEach((article, index) => {
+        const position = [article.location.latitude, article.location.longitude];
+        bounds.extend(position);
+        
+        // Create a custom icon with the trip color
+        const customIcon = L.divIcon({
+          html: `
+            <div style="
+              background: ${lastTrip.color};
+              width: 24px;
+              height: 24px;
+              border-radius: 50% 50% 50% 0;
+              transform: rotate(-45deg);
+              position: relative;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 0 8px rgba(0,0,0,0.2);
+            ">
               <div style="
-                background: ${trip.color};
-                width: 24px;
-                height: 24px;
-                border-radius: 50% 50% 50% 0;
-                transform: rotate(-45deg);
-                position: relative;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 0 8px rgba(0,0,0,0.2);
+                transform: rotate(45deg);
+                color: white;
+                font-weight: bold;
+                font-size: 12px;
+                text-align: center;
+                line-height: 1;
+                padding-top: 2px;
               ">
-                <div style="
-                  transform: rotate(45deg);
-                  color: white;
-                  font-weight: bold;
-                  font-size: 12px;
-                  text-align: center;
-                  line-height: 1;
-                  padding-top: 2px;
-                ">
-                  ${index + 1}
-                </div>
+                ${index + 1}
               </div>
-            `,
-            className: '',
-            iconSize: [24, 24],
-            iconAnchor: [12, 24],
-            popupAnchor: [0, -24]
-          });
+            </div>
+          `,
+          className: '',
+          iconSize: [24, 24],
+          iconAnchor: [12, 24],
+          popupAnchor: [0, -24]
+        });
 
           const marker = L.marker(position, { icon: customIcon }).addTo(map);
           markers.push(marker);
@@ -184,7 +184,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
                   <div style="
                     width: 12px;
                     height: 12px;
-                    background: ${trip.color};
+                    background: ${lastTrip.color};
                     border-radius: 50%;
                     margin-right: 6px;
                     flex-shrink: 0;
@@ -210,14 +210,14 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
         });
 
         // Add polyline connecting locations in chronological order for this trip
-        if (trip.articles.length > 1) {
-          const polylinePositions = trip.articles
+        if (lastTrip.articles.length > 1) {
+          const polylinePositions = lastTrip.articles
             .filter(a => a.location?.latitude && a.location?.longitude)
             .map(article => [article.location.latitude, article.location.longitude]);
 
           if (polylinePositions.length > 1) {
             L.polyline(polylinePositions, {
-              color: trip.color,
+              color: lastTrip.color,
               weight: 3,
               opacity: 0.8,
               lineJoin: 'round',
@@ -226,7 +226,6 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
             }).addTo(map);
           }
         }
-      });
 
       // Fit map to bounds if there are locations
       if (markers.length > 0) {
@@ -243,7 +242,7 @@ const TripMap = ({ articles = [], className = 'h-96' }) => {
     };
 
     setupMapContent();
-  }, [map, isClient, articlesWithLocation]);
+  }, [map, isClient, articlesWithLocation, trips]);
 
   // Show loading state during SSR or while initializing
   if (!isClient) {
