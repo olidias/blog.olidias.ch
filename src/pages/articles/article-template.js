@@ -114,7 +114,7 @@ export const query = graphql`
       publicationDate
       articleContent
       articleGallery {
-        url(imgixParams: { h: "490", w: "896", fit: "crop" })
+        url(imgixParams: {  fit: "crop" })
         alt
         customData
       }
